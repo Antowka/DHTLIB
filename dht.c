@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <string.h>
 #define MAXTIMINGS 85 
 #define DHTPIN	7
 
@@ -56,9 +55,7 @@ char *read_dht11() {
 
 	   f = dht11_dat[2] * 9. / 5. + 32;
 	   char *data = malloc(36);
-           char resultStr[35];		
-	   sprintf(resultStr, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3], f);
-           strcpy(data, resultStr);
+	   sprintf(data, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3], f);
 	   return data;
 
 	} else {
