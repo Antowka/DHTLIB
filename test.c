@@ -4,7 +4,7 @@
 
 int main(void) {
 
-  char* result = read_dht11(); 
+  char* result = read_dht22(); 
 
   printf("%s \n", result);
 
