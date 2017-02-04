@@ -1,6 +1,7 @@
 # DHT Lib 
 
-DEPENDENCY LIBS:
+DEPENDENCY LIBS for build:
+
 [WiringPi](https://github.com/WiringPi/WiringPi)
 
 Read data from DHT11 or DHT22 for RaspberryPi.
