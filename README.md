@@ -1,5 +1,10 @@
-# DHT11LIB + WiringPi
+# DHT Lib 
 
-Read data from DHT11 for RaspberryPi;
+DEPENDENCY LIBS:
+[WiringPi](https://github.com/WiringPi/WiringPi)
 
-Build and testing: make clean && make && make test && ./test
+Read data from DHT11 or DHT22 for RaspberryPi.
+
+For connection using pinout GPIO4 *(7 pin for Raspberry PI 3)*
+
+**Build and testing**: *make clean && make && make test && ./test*
