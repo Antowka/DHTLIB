@@ -4,11 +4,8 @@
 
 int main(void) {
 
-  char* result = read_dht22(); 
-
+  char result[36]; 
+  read_dht22(result); 
   printf("%s \n", result);
-
-  free(result);
-
   return 0;
 }
