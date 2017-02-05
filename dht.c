@@ -65,7 +65,7 @@ void read_dht11(char* data) {
     }
 }
 
-void read_dht22(char* data) {
+void read_dht22(char** data) {
 
 	if ( wiringPiSetup() == -1 ) exit( 1 );
 
@@ -122,11 +122,23 @@ void read_dht22(char* data) {
            if ((dht_dat[2] & 0x80) != 0)  t *= -1;
 
 	   f = t * 9. / 5. + 32;
-	   sprintf(data, "Hum: %.2f %% Temp: %.2f C (%.2f F) \n", h, t, f);
+
+	   if(*data == NULL) {
+	     *data = malloc(sizeof(char)*36);
+             memset(*data, 0, sizeof(char)*36);
+           }
+           
+           char result[36];
+           sprintf(result, "Hum: %.2f %% Temp: %.2f C (%.2f F) \n", h, t, f);
+           strcpy(*data, result);
 	   
 	} else {
            
-           ++try_counter;  
+          ++try_counter;  
           read_dht22(data);
     }
+}
+
+void cleanup(char* data){
+  free(data);
 }
