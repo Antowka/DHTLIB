@@ -58,12 +58,12 @@ void read_dht11(char** data) {
 	   f = dht_dat[2] * 9. / 5. + 32;
 
            if(*data == NULL) {
-             *data = malloc(sizeof(char)*36);
-             memset(*data, 0, sizeof(char)*36);
+             *data = (char*)malloc(sizeof(char)*37);
+             memset(*data, 0, sizeof(char)*37);
            }
 
            char result[36];
-	   sprintf(result, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht_dat[0], dht_dat[1], dht_dat[2], dht_dat[3], f);
+	  	   sprintf(result, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht_dat[0], dht_dat[1], dht_dat[2], dht_dat[3], f);
            strcpy(*data, result);           
 
 	} else {
@@ -72,11 +72,12 @@ void read_dht11(char** data) {
           if (MAXTIMINGS > try_counter) {
             read_dht11(data);
           } else {
-             char result[36];
-             sprintf(result, "problem with sensor");
-             strcpy(*data, result);
+          	*data = (char*)malloc(sizeof(char)*37);
+            memset(*data, 0, sizeof(char)*37);
+            char result[36];
+            sprintf(result, "problem with sensor");
+            strcpy(*data, result);
           }
-
     }
 }
 
@@ -129,38 +130,38 @@ void read_dht22(char** data) {
 
 	if ( (j >= 40) && (dht_dat[4] == ( (dht_dat[0] + dht_dat[1] + dht_dat[2] + dht_dat[3]) & 0xFF) ) )	{
 
-           float t, h;
-           h = (float)dht_dat[0] * 256 + (float)dht_dat[1];
-           h /= 10;
-           t = (float)(dht_dat[2] & 0x7F)* 256 + (float)dht_dat[3];
-           t /= 10.0;
-           if ((dht_dat[2] & 0x80) != 0)  t *= -1;
+       float t, h;
+       h = (float)dht_dat[0] * 256 + (float)dht_dat[1];
+       h /= 10;
+       t = (float)(dht_dat[2] & 0x7F)* 256 + (float)dht_dat[3];
+       t /= 10.0;
+       if ((dht_dat[2] & 0x80) != 0)  t *= -1;
 
 	   f = t * 9. / 5. + 32;
 
 	   if(*data == NULL) {
-	     *data = (char*)malloc(sizeof(char)*37);
-             memset(*data, 0, sizeof(char)*37);
-           }
+         *data = (char*)malloc(sizeof(char)*37);
+         memset(*data, 0, sizeof(char)*37);
+       }
            
-           char result[36];
-           sprintf(result, "Hum: %.2f %% Temp: %.2f C (%.2f F) \n", h, t, f);
-           strcpy(*data, result);
+       char result[36];
+       sprintf(result, "Hum: %.2f %% Temp: %.2f C (%.2f F) \n", h, t, f);
+       strcpy(*data, result);
 	   
 	} else {
            
-          ++try_counter;  
-          if (MAXTIMINGS > try_counter) {
-            read_dht22(data);
-          } else {
+	  ++try_counter;  
+	  if (MAXTIMINGS > try_counter) {
+	    read_dht22(data);
+	  } else {
 
-             *data = (char*)malloc(sizeof(char)*37);
-             memset(*data, 0, sizeof(char)*37);
+	    *data = (char*)malloc(sizeof(char)*37);
+	    memset(*data, 0, sizeof(char)*37);
 
-             char result[36];
-             sprintf(result, "problem with sensor");
-             strcpy(*data, result);
-          }
+	    char result[36];
+	    sprintf(result, "problem with sensor");
+	    strcpy(*data, result);
+	  }
     }
 }
 
