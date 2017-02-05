@@ -11,7 +11,7 @@ const int MAX_REPIAT=300;
 int dht_dat[5] = { 0, 0, 0, 0, 0 };
 int try_counter = 0;
  
-void read_dht11(char* data) {
+void read_dht11(char** data) {
 
 	if ( wiringPiSetup() == -1 ) exit( 1 );
 
@@ -56,12 +56,27 @@ void read_dht11(char* data) {
 	if ( (j >= 40) && (dht_dat[4] == ( (dht_dat[0] + dht_dat[1] + dht_dat[2] + dht_dat[3]) & 0xFF) ) )	{
 
 	   f = dht_dat[2] * 9. / 5. + 32;
-	   sprintf(data, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht_dat[0], dht_dat[1], dht_dat[2], dht_dat[3], f);
+
+           if(*data == NULL) {
+             *data = malloc(sizeof(char)*36);
+             memset(*data, 0, sizeof(char)*36);
+           }
+
+           char result[36];
+	   sprintf(result, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht_dat[0], dht_dat[1], dht_dat[2], dht_dat[3], f);
+           strcpy(*data, result);           
 
 	} else {
            
            ++try_counter;
-           read_dht11(data);
+          if (MAXTIMINGS > try_counter) {
+            read_dht11(data);
+          } else {
+             char result[36];
+             sprintf(result, "problem with sensor");
+             strcpy(*data, result);
+          }
+
     }
 }
 
@@ -124,8 +139,8 @@ void read_dht22(char** data) {
 	   f = t * 9. / 5. + 32;
 
 	   if(*data == NULL) {
-	     *data = malloc(sizeof(char)*36);
-             memset(*data, 0, sizeof(char)*36);
+	     *data = (char*)malloc(sizeof(char)*37);
+             memset(*data, 0, sizeof(char)*37);
            }
            
            char result[36];
@@ -135,7 +150,17 @@ void read_dht22(char** data) {
 	} else {
            
           ++try_counter;  
-          read_dht22(data);
+          if (MAXTIMINGS > try_counter) {
+            read_dht22(data);
+          } else {
+
+             *data = (char*)malloc(sizeof(char)*37);
+             memset(*data, 0, sizeof(char)*37);
+
+             char result[36];
+             sprintf(result, "problem with sensor");
+             strcpy(*data, result);
+          }
     }
 }
 

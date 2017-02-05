@@ -5,8 +5,12 @@
 int main(void) {
 
   char *result; 
-  read_dht22(&result); 
-  printf("%s \n", result);
+
+  for(int i = 5; i > 0; i--) {
+     read_dht22(&result); 
+     printf("%s \n", result);
+  }
+
   cleanup(result);
   return 0;
 }
