@@ -145,7 +145,7 @@ void read_dht22(char** data) {
        }
            
        char result[36];
-       sprintf(result, "Hum: %.2f %% Temp: %.2f C (%.2f F) \n", h, t, f);
+       sprintf(result, "Hum: %.1f %% Temp: %.1f C (%.1f F) \n", h, t, f);
        strcpy(*data, result);
 	   
 	} else {
