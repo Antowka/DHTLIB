@@ -63,7 +63,7 @@ void read_dht11(char** data) {
            }
 
            char result[36];
-	  	   sprintf(result, "Hum: %d.%d %% Temp: %d.%d C (%.1f F)\n", dht_dat[0], dht_dat[1], dht_dat[2], dht_dat[3], f);
+	  	   sprintf(result, "H:%d.%d%% T:%d.%dC TF:%.1fF\n", dht_dat[0], dht_dat[1], dht_dat[2], dht_dat[3], f);
            strcpy(*data, result);           
 
 	} else {
@@ -145,7 +145,7 @@ void read_dht22(char** data) {
        }
            
        char result[36];
-       sprintf(result, "Hum: %.1f %% Temp: %.1f C (%.1f F) \n", h, t, f);
+       sprintf(result, "H:%.1f%% T:%.1fC TF:%.1fF\n", h, t, f);
        strcpy(*data, result);
 	   
 	} else {
